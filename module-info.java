@@ -5,4 +5,5 @@ module prestimo{
     
     exports prestimo.controllers; 
     exports prestimo.models.local;
+    exports prestimo;
 }
