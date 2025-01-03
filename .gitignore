@@ -3,3 +3,5 @@ Prestimo.iml
 .vscode/
 
 prestimo/controllers/MainController.java
+.vscode
+prestimo-out

@@ -1,7 +1,0 @@
-{
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "/home/osvaldo/JavaFX-21/postgresql-42.7.4.jar",
-        "/home/osvaldo/JavaFX-21/javafx-sdk-21.0.5/lib/*.jar"
-    ]
-}

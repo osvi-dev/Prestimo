@@ -1,20 +1,22 @@
 package prestimo;
 
 
-import prestimo.models.local.Instancia;
-import prestimo.models.local.Roles;
-import prestimo.models.local.Usuarios;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import prestimo.controllers.MainController;
 
-public class Main {
+public class Main extends Application {
     public static void main(String[] args) {
-        // Roles roles = new Roles();
-        // roles.insertarRol("Administrador");
-        // roles.insertarRol("Empleado");
+        
+        launch(args);
 
-        // Usuarios usuarios = new Usuarios();
-        // usuarios.insertarUsuario("prueba", "si", "hola", "test", "test@gmail", "ayuda", 1);
+    }
 
-        Instancia instancia = new Instancia();
-        instancia.insertarInstancia("jsldaksdkjaslkdj");
-    }    
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setScene(new Scene(new MainController().getView()));
+        primaryStage.setFullScreen(true);
+        primaryStage.show();
+    }
 }

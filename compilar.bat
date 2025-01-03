@@ -1,0 +1,4 @@
+javac --module-path "C:\Program Files\Java\javafx-sdk-19\lib" ^
+--class-path ".;C:\Users\fidel\Documents\MaxxiPrestamos Java\MVC-I\prestimo\views\styles" ^
+ -d "C:\Users\fidel\Documents\MaxxiPrestamos Java\MVC-I\prestimo-out" ^
+  "C:\Users\fidel\Documents\MaxxiPrestamos Java\MVC-I\prestimo\views\LoginViewBuilder.java" "C:\Users\fidel\Documents\MaxxiPrestamos Java\MVC-I\prestimo\views\Resources.java" "C:\Users\fidel\Documents\MaxxiPrestamos Java\MVC-I\prestimo\views\MainViewBuilder.java" "C:\Users\fidel\Documents\MaxxiPrestamos Java\MVC-I\prestimo\controllers\MainController.java" "C:\Users\fidel\Documents\MaxxiPrestamos Java\MVC-I\prestimo\Main.java" "C:\Users\fidel\Documents\MaxxiPrestamos Java\MVC-I\module-info.java"
