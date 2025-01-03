@@ -1,8 +1,6 @@
 package prestimo.controllers;
 
-public class MainController {
-    
-    
 
+public class MainController {
 
 }
