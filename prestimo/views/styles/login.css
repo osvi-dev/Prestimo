@@ -1,0 +1,33 @@
+.title-login{
+    -fx-text-fill: #606060;
+}
+.text-field-login{
+   
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(48, 48, 48, 0.033), 2, 0.5, 2, 2);
+    -fx-border-width: 0;
+    -fx-background-color: white; /* Color de fondo del TextField */
+    -fx-background-insets: 0; /* Elimina el borde interno */
+}
+
+.login-btn{
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-background-color: #010101;
+    -fx-font-size: 15px;
+}
+
+.login-btn:hover{
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-background-color: #E9B700;
+    -fx-cursor: hand;
+}
+
+.forgot-password {
+    -fx-text-fill: #a66c3d; /* Cambiar el color del texto */
+    -fx-cursor: hand; /* Cambiar el cursor a puntero */
+}
+
+.forgot-password:hover {
+    -fx-text-fill: #c05600; /* Cambiar el color del texto al pasar el mouse */
+}

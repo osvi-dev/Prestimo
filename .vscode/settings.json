@@ -1,7 +1,20 @@
 {
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "/home/osvaldo/JavaFX-21/postgresql-42.7.4.jar",
-        "/home/osvaldo/JavaFX-21/javafx-sdk-21.0.5/lib/*.jar"
-    ]
+    "java.project.sourcePaths": [
+        "."
+    ],
+    "java.project.referencedLibraries": {
+        "include": [
+            "c:\\Program Files\\Java\\javafx-sdk-19\\lib\\javafx.base.jar",
+            "c:\\Program Files\\Java\\javafx-sdk-19\\lib\\javafx.web.jar",
+            "c:\\Program Files\\Java\\javafx-sdk-19\\lib\\javafx.swing.jar",
+            "c:\\Program Files\\Java\\javafx-sdk-19\\lib\\javafx.media.jar",
+            "c:\\Program Files\\Java\\javafx-sdk-19\\lib\\javafx.graphics.jar",
+            "c:\\Program Files\\Java\\javafx-sdk-19\\lib\\javafx.controls.jar",
+            "c:\\Program Files\\Java\\javafx-sdk-19\\lib\\javafx-swt.jar",
+            "c:\\Program Files\\Java\\javafx-sdk-19\\lib\\javafx.fxml.jar"
+        ],
+        "exclude": [
+            "c:\\Program Files\\Java\\javafx-sdk-21.0.3\\lib\\javafx-swt.jar"
+        ]
+    },
 }
