@@ -1,5 +1,8 @@
 package prestimo.views;
 
+import java.util.HashMap;
+import java.util.function.Consumer;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -21,6 +24,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.util.Builder;
+import prestimo.models.LoginModel;
+import prestimo.models.MainModel;
 
 public class LoginViewBuilder implements  Builder<Region>{
 
@@ -28,9 +33,12 @@ public class LoginViewBuilder implements  Builder<Region>{
     private final double leftContainerHeight = Screen.getPrimary().getBounds().getHeight();
     private final double rigthContainerWidth =Screen.getPrimary().getBounds().getWidth()/2.5;
     private final double rigthContainerHeight = Screen.getPrimary().getBounds().getHeight();
-    
-    public LoginViewBuilder(){
-
+    private HashMap<String, Consumer<Runnable>> map;
+    private LoginModel model;
+    public LoginViewBuilder(LoginModel model, HashMap<String, Consumer<Runnable>> map){
+        this.model = model;
+        this.map = map;
+       
     }
 
     @Override
@@ -145,7 +153,11 @@ public class LoginViewBuilder implements  Builder<Region>{
         Button btn = new Button(
            "Iniciar Sesion"
         );
-        
+        btn.disableProperty().bind(model.getloginButtonDisabledProperty());
+        btn.setOnAction(
+            evt -> {
+                this.loginService().accept(()->System.out.println("En el boton")); }
+        );
        
         btn.setPrefWidth(300);
         btn.setPrefHeight(40);
@@ -169,5 +181,9 @@ public class LoginViewBuilder implements  Builder<Region>{
 
     //-------------------------------------------------------------
 
-    
+    //Services ---------------------------------------
+    private Consumer<Runnable> loginService (){
+        return this.map.get("login");
+    }
+    //--------------------------------------------------------
 }
