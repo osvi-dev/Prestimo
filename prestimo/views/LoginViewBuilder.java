@@ -129,6 +129,7 @@ public class LoginViewBuilder implements  Builder<Region>{
 
     private Node createMailField(){
         TextField textField = new TextField(); 
+        model.getEmailProperty().bind(textField.textProperty());
         textField.setPromptText("email");
         textField.setPrefWidth(300);
         textField.setPrefHeight(40);
@@ -143,6 +144,7 @@ public class LoginViewBuilder implements  Builder<Region>{
 
     private Node createPasswordField(){
         PasswordField textField = new PasswordField(); 
+        model.getPasswordProperty().bind(textField.textProperty());
         textField.setPromptText("password");
         textField.setPrefWidth(300);
         textField.setPrefHeight(40);
@@ -156,7 +158,13 @@ public class LoginViewBuilder implements  Builder<Region>{
         btn.disableProperty().bind(model.getloginButtonDisabledProperty());
         btn.setOnAction(
             evt -> {
-                this.loginService().accept(()->System.out.println("En el boton")); }
+                this.loginService().accept(
+                    ()->{
+                        System.out.println("Email: "+model.getEmailProperty().getValue()+"\n"+"Password: "+ 
+                        model.getPasswordProperty().getValue());
+                        
+                    }
+                ); }
         );
        
         btn.setPrefWidth(300);
