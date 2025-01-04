@@ -38,7 +38,7 @@ public class LoginViewBuilder implements  Builder<Region>{
         Pane results = new Pane(createMainCointainer());
        // results.setStyle("-fx-background-color: #3498db;"); 
     
-       results.getStylesheets().add("/login.css");
+       results.getStylesheets().add("prestimo/views/styles/login.css"); 
 
         return results;
     }
@@ -58,7 +58,7 @@ public class LoginViewBuilder implements  Builder<Region>{
 
     private Node createLogo(){
         Pane container = new Pane();
-        Image image = new Image("prestimo\\img\\logo.png",
+        Image image = new Image("prestimo/img/logo.png",
         this.leftContainerWidth, this.leftContainerHeight, false, true);
    // container.setStyle("-fx-background-color:rgb(0, 0, 0);"); 
         container.setMinWidth(this.leftContainerWidth);
