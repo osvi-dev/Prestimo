@@ -7,6 +7,7 @@ import javafx.util.Builder;
 
 public class MainViewBuilder implements Builder<Region> {
     private final Region loginContent ;
+    //COMENTARI
     public MainViewBuilder(Region loginContent){
         this.loginContent = loginContent;
     }
