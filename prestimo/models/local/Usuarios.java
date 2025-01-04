@@ -2,14 +2,13 @@ package prestimo.models.local;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
+import java.sql.ResultSet;
 
 import prestimo.models.database.DatabaseInit;
 import prestimo.models.database.VariablesDatabase;
 import prestimo.models.database.Encriptar;
 public class Usuarios {
 
-    
     private DatabaseInit dbInit = new DatabaseInit(VariablesDatabase.getDATABASE(), VariablesDatabase.getUSER(), VariablesDatabase.getPASSWORD());
     private Connection connection;
     private int id;
@@ -63,8 +62,8 @@ public class Usuarios {
     public void insertarUsuario(String nombre, String apellido_paterno, String apellido_materno,
                                 String username, String correo, String password, int id_rol){
         String sql = "INSERT INTO usuarios (nombre, apellido_paterno, apellido_materno, username, correo, password, id_rol) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try {
-            password = Encriptar.encriptar(password);
+        password = Encriptar.encriptar(password);
+        try{
             setConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, nombre);
@@ -76,6 +75,7 @@ public class Usuarios {
             statement.setInt(7, id_rol);
             statement.executeUpdate();
             connection.close();
+            statement.close();
             System.out.println("Usuario insertado correctamente");
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,6 +90,7 @@ public class Usuarios {
             statement.setString(1, username);
             statement.executeUpdate();
             connection.close();
+            statement.close();
             System.out.println("Usuario desabilitado correctamente");
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,24 +105,102 @@ public class Usuarios {
             statement.setInt(1, id);
             statement.executeUpdate();
             connection.close();
+            statement.close();
             System.out.println("Usuario desabilitado correctamente");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void obetenerUsuarios(){
+    /*
+     * Metodo para obtener todos los usuarios de la base de datos
+     */
+    public void obtenerUsuarios(){
         String sql = "SELECT nombre, apellido_paterno, apellido_materno FROM usuarios";
         try {
             setConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeQuery();
             connection.close();
+            statement.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /*
+     * Metodo para verificar las credenciales del usuario
+     * @param correo
+     * @param username
+     * @param password  
+     */
+    public boolean veficarCredenciales(String correo, String username, String password){
+        // Si el correo es vacio, se verifica el username
+        if (correo.equals("")){
+            return loginUsername(username, password);
+        }
+        // En dado caso que el correo no este vacio, quiere decir
+        // que tenemos correo
+        
+        return loginCorreo(correo, password);
+    }
+
+    /*
+     * Metodo para verificar si el username y la contraseña son correctos
+     * @param username
+     * @param password
+     */
+    private boolean loginUsername(String username, String password){
+        // Preparamos la consulta para craer el username y la contraseña de la db
+        String sql = "Select username, password from usuarios where username = ? and password = ?";
+        boolean login = false; // flag para ver si las credenciales son correctas
+        try {
+            setConnection(); 
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, username);
+            statement.setString(2, password);
+            ResultSet resultSet = statement.executeQuery();
+    
+            // Si el resultado tiene una fila, las credenciales son válidas
+            if (resultSet.next()) {
+                login = true;
+            }
+            connection.close();
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return login;
+    }
+
+    /*
+     * Metodo para verificar si el correo y la contraseña son correctos
+     * @param correo
+     * @param password
+    */
+
+    private boolean loginCorreo(String correo, String password){
+        // Preparamos la consulta para traer el correo y la contraseña de la db
+        String sql = "Select correo, password from usuarios where correo = ? and password = ?";
+        boolean login = false; // flag para ver si las credenciales son correctas
+        try {
+            setConnection(); 
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, correo);
+            statement.setString(2, password);
+            ResultSet resultSet = statement.executeQuery();
+    
+            // Si el resultado tiene una fila, las credenciales son válidas
+            if (resultSet.next()) {
+                login = true;
+            }
+            connection.close();
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return login;
+    }
 
     // Seters y Getters
     public void setId(int id){this.id = id;}

@@ -16,6 +16,7 @@ public class LoginController {
     MainModel mainModel;
     LoginModel loginModel;
     LoginInteractor loginInteractor;
+    
     public LoginController(MainModel mainModel){
         this.mainModel = mainModel;
         this.loginModel = new LoginModel();
@@ -30,7 +31,7 @@ public class LoginController {
         return loginViewBuilder.build();
 
     }
-
+    // TODO: hacer el metodo para verificar las crendenciales del login
     public void loginUser(Runnable postAction){
         //Region region = this.getView();
        
@@ -43,6 +44,9 @@ public class LoginController {
                 //TODO: Hacer el metodo en el interactor y llamarlo aqui
                // interactor.loginUser();
                 //mainModel.loginSelectedProperty().set(false);
+                // System.out.println("Email: "+loginModel.getEmailProperty().getValue()+"\n"+"Password: "+ 
+                // loginModel.getPasswordProperty().getValue());
+                loginInteractor.login(loginModel.getEmailProperty().get(), loginModel.getPasswordProperty().get());
                 return null;
             }
         };
