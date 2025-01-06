@@ -1,7 +1,20 @@
 .sidebar-button{
-    -fx-background-color: #E9B700;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 0px;
+}
+.sidebar-button-text{
+    -fx-text-fill: #BEBEBE;
 }
 
-.sidebar{
+.sidebar-button:hover  {
+    /*#E9B700*/
+    /*#BEBEBE*/
+    -fx-text-fill: #000000;
     -fx-background-color: #000000;
+    
+}
+
+
+.sidebar{
+    -fx-background-color: #ffffff;
 }

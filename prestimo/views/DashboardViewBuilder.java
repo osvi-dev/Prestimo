@@ -3,8 +3,17 @@ package prestimo.views;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -47,47 +56,103 @@ public class DashboardViewBuilder implements Builder<Region> {
     //SideBar --------------------------------------
 
     private Node createSideBarContainer(){
-        VBox container = new VBox(
-            createBuyButton(),
-            createSaleButton(),
-            createLoanButton()
-        );
+        VBox container = new VBox(createButtonsContainer());
+        container.setPadding(new Insets(100, 0, 0, 0));
         container.getStyleClass().add("sidebar");
+
+        return container;
+    }
+    private Node createButtonsContainer(){
+        VBox container = new VBox(
+        createBuyButton(),
+        createSaleButton(),
+        createLoanButton()
+        );
+        container.setSpacing(5);
 
         return container;
     }
 
     private Node createBuyButton(){
-        Button button = new Button("Compra");
-        button.getStyleClass().add("sidebar-button");
-        button.setOnAction(
-            evt -> {
-                model.setBuyProperty(true);
-                this.buyView().accept(
-                    ()-> {
-
-                    }
-                );
-            }
+        VBox button = new VBox( 
+            innerButtonContainer("Compra","prestimo/img/buy.png")
         );
+        button.setAlignment(Pos.CENTER);
+        button.setPrefWidth(200);
+        button.setPrefHeight(40);
+       button.getStyleClass().add("sidebar-button");
+            // Manejar el evento de clic
+        button.setOnMouseClicked(evt -> {
+            model.setBuyProperty(true);
+            this.buyView().accept(() -> {
+                // Acción adicional aquí
+            });
+        });
         return button;
 
     }
     private Node createSaleButton(){
-        Button button = new Button("Venta");
+        VBox button = new VBox(innerButtonContainer("Venta","prestimo/img/sale.png") );
+        button.setAlignment(Pos.CENTER);
+        button.setPrefWidth(200);
+        button.setPrefHeight(40);
         button.getStyleClass().add("sidebar-button");
-
+            // Manejar el evento de clic
+        button.setOnMouseClicked(evt -> {
+           
+        });
         return button;
-
     }
 
     private Node createLoanButton(){
-        Button button = new Button("Prestamo");
+        VBox button = new VBox( innerButtonContainer("Prestamo","prestimo/img/loan.png"));
+        button.setAlignment(Pos.CENTER);
+        button.setPrefWidth(200);
+        button.setPrefHeight(40);
         button.getStyleClass().add("sidebar-button");
-
+            // Manejar el evento de clic
+        button.setOnMouseClicked(evt -> {
+          
+        });
         return button;
 
     }
+    private Node innerButtonContainer(String text, String url){
+        Label title =new Label(text);
+        title.getStyleClass().add("sidebar-button-text");
+        HBox container = new HBox(createIcon(url), title);
+       
+        container.setAlignment(Pos.CENTER);
+        container.setSpacing(20);
+        return container;
+    }
+    private Node createIcon(String url){
+        VBox container = new VBox();
+        Image image = new Image(url,
+       50, 30, false, true);
+       BackgroundImage backgroundImage = new BackgroundImage(
+            image,
+            BackgroundRepeat.NO_REPEAT, // Repetir en eje X
+            BackgroundRepeat.NO_REPEAT, // Repetir en eje Y
+            BackgroundPosition.DEFAULT,  // Posicionar en el centro
+            new BackgroundSize(
+               BackgroundSize.AUTO,     // Ancho automático
+               BackgroundSize.AUTO,     // Alto automático
+                true,                   // Usar ancho absoluto
+                true,                   // Usar alto absoluto
+                true,                    // Ajustar para cubrir
+                false                    // No recortar
+            )
+            );
+           
+        container.setMinWidth(20);
+        container.setMinHeight(15);
+        container.setBackground(new Background(backgroundImage));
+       
+        
+        return container;
+    }
+   
 
 
     //---------------------------------------------
