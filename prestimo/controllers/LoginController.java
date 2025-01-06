@@ -41,11 +41,8 @@ public class LoginController {
                 loginModel.setloginButtonDisabledProperty(true);
                 System.out.println("Logeado!");
                 loginModel.setloginButtonDisabledProperty(false);
-                //TODO: Hacer el metodo en el interactor y llamarlo aqui
-               // interactor.loginUser();
-                //mainModel.loginSelectedProperty().set(false);
-                // System.out.println("Email: "+loginModel.getEmailProperty().getValue()+"\n"+"Password: "+ 
-                // loginModel.getPasswordProperty().getValue());
+                // Mandamos llamada al interactor de login y le mandamos el email ( o username)
+                // y la contraseña, las verifica en la db para ver si son correctas
                 loginInteractor.login(loginModel.getEmailProperty().get(), loginModel.getPasswordProperty().get());
                 return null;
             }

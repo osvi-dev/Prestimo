@@ -19,7 +19,7 @@ public class LoginInteractor {
      * @param usernameOrEmail
      */
     public void login(String usernameOrEmail, String password){
-        
+        // TODO: Avisar si las credenciales son invalidas
         password = Encriptar.encriptar(password);
         if (verificarUsername(usernameOrEmail)) {
            System.out.println("Es un username");
