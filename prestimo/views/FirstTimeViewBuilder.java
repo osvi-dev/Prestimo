@@ -67,7 +67,7 @@ public class FirstTimeViewBuilder implements  Builder<Region>{
 
     private Node createLogo(){
         Pane container = new Pane();
-        Image image = new Image("prestimo\\img\\logo.png",
+        Image image = new Image("/prestimo/img/logo.png",
         this.leftContainerWidth, this.leftContainerHeight, false, true);
    // container.setStyle("-fx-background-color:rgb(0, 0, 0);"); 
         container.setMinWidth(this.leftContainerWidth);

@@ -43,7 +43,7 @@ public class DashboardViewBuilder implements Builder<Region> {
         Pane results = new Pane(createMainCointainer());
        results.setStyle("-fx-background-color: #3498db;"); 
       
-       results.getStylesheets().add("/dashboard.css");
+       results.getStylesheets().add("prestimo/views/styles/dashboard.css");
         return results;
     }
 
