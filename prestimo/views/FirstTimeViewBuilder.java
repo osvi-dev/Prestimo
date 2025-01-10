@@ -123,15 +123,15 @@ public class FirstTimeViewBuilder implements  Builder<Region>{
 
     }
     private Node createFieldsContainer(){
-        VBox container = new VBox(createMailField() );
+        VBox container = new VBox(createTokenField() );
         container.setSpacing(20);
         return container;
     }
 
-    private Node createMailField(){
+    private Node createTokenField(){
         TextField textField = new TextField(); 
         model.getTokenProperty().bind(textField.textProperty());
-        textField.setPromptText("email");
+        textField.setPromptText("token");
         textField.setPrefWidth(300);
         textField.setPrefHeight(40);
         textField.getStyleClass().add("text-field-login");
