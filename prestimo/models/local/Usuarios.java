@@ -18,12 +18,12 @@ public class Usuarios {
     private String username;
     private String correo;
     private String password;
-    private String id_rol;
+    private int id_rol;
 
     public Usuarios(){}
 
     public Usuarios(String nombre, String apellido_paterno, String apellido_materno, 
-                    String username, String correo, String password, String id_rol){
+                    String username, String correo, String password, int id_rol){
         this.nombre = nombre;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
@@ -34,7 +34,7 @@ public class Usuarios {
     }
     
     public Usuarios(String nombre, String apellido_paterno, String usermane, 
-                    String correo, String password, String id_rol){
+                    String correo, String password, int id_rol){
         this.nombre = nombre;
         this.apellido_paterno = apellido_paterno;
         this.username = usermane;
@@ -49,8 +49,8 @@ public class Usuarios {
         connection = dbInit.getConnection();
     }
 
-    /*
-     * Metodo para insertar un nuevo usuario
+    /**
+     * Inserta un nuevo usuario
      * @param nombre
      * @param apellido_paterno
      * @param apellido_materno
@@ -82,6 +82,10 @@ public class Usuarios {
         }
     }
 
+    /**
+     * Desabilitar un usuario por su username
+     * @param username
+     */
     public void desabilitarUsuarioPorUsername(String username){
         String sql = "UPDATE usuarios SET disponible = 0 WHERE username = ?";
         try {
@@ -97,6 +101,10 @@ public class Usuarios {
         }
     }
     
+    /**
+     * Desabilita un usuario por su id
+     * @param id
+     */
     public void desabilitarUsuarioPorId(int id){
         String sql = "UPDATE usuarios SET disponible = 0 WHERE id = ?";
         try {
@@ -112,7 +120,7 @@ public class Usuarios {
         }
     }
 
-    /*
+     /**
      * Metodo para obtener todos los usuarios de la base de datos
      */
     public void obtenerUsuarios(){
@@ -128,7 +136,7 @@ public class Usuarios {
         }
     }
 
-    /*
+    /**
      * Metodo para verificar las credenciales del usuario
      * @param correo
      * @param username
@@ -145,7 +153,7 @@ public class Usuarios {
         return loginCorreo(correo, password);
     }
 
-    /*
+    /**
      * Metodo para verificar si el username y la contraseña son correctos
      * @param username
      * @param password
@@ -173,7 +181,7 @@ public class Usuarios {
         return login;
     }
 
-    /*
+    /**
      * Metodo para verificar si el correo y la contraseña son correctos
      * @param correo
      * @param password
@@ -223,6 +231,7 @@ public class Usuarios {
     
     public String getPassword(){ return password; }
 
-
+    public void setIdRol(int id_rol){this.id_rol = id_rol;}
+    public int getIdRol(){ return id_rol; }
     
 }

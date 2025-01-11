@@ -1,6 +1,13 @@
 package prestimo.models.local;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import prestimo.models.database.DatabaseInit;
+import prestimo.models.database.VariablesDatabase;
+
 public class ComprasMetales {
+    /* TODO: tienes que hacer un metodo que lleve la cuenta de los ID, para mantener el contorl */
     private int id;
     private int kilataje;
     private double peso;
@@ -16,6 +23,9 @@ public class ComprasMetales {
     private int id_materiales;
     private int id_usuario;
     private int id_variables;
+
+    private DatabaseInit dbInit = new DatabaseInit(VariablesDatabase.getDATABASE(), VariablesDatabase.getUSER(), VariablesDatabase.getPASSWORD());
+    private Connection connection;
     
     public ComprasMetales() {}
 
@@ -36,6 +46,57 @@ public class ComprasMetales {
         this.id_materiales = id_materiales;
         this.id_usuario = id_usuario;
         this.id_variables = id_variables;
+    }
+
+    // Metodo para insertarlo en la base de datos
+    private void setConnection(){
+        connection = dbInit.getConnection();
+    }
+
+    /**
+     * Metodo para insertar una compra de metales
+     * @param kilataje
+     * @param peso
+     * @param precio_oz_inter
+     * @param precio_gr_inter
+     * @param precio_gr_local
+     * @param precio_kilataje
+     * @param precio_kilataje_total
+     * @param precio_gr_final
+     * @param monto_max_compra
+     * @param id_materiales
+     * @param id_usuario
+     * @param id_variables
+     */
+    public void insertarCompraMetales(int kilataje, double peso, double precio_oz_inter, double precio_gr_inter,
+    double precio_gr_local, double precio_kilataje, double precio_kilataje_total, double precio_gr_final,
+    double monto_max_compra, int id_materiales, int id_usuario, int id_variables){
+        String sql = "INSERT INTO compras_metales (kilataje, peso, precio_oz_inter, precio_gr_inter,precio_gr_local,"
+        + "precio_kilataje, precio_kilataje_total, precio_gr_final, monto_max_compra, id_materiales, id_usuario, id_variables)"
+        + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            setConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, kilataje);
+            statement.setDouble(2, peso);
+            statement.setDouble(3, precio_oz_inter);
+            statement.setDouble(4, precio_gr_inter);
+            statement.setDouble(5, precio_gr_local);
+            statement.setDouble(6, precio_kilataje);
+            statement.setDouble(7, precio_kilataje_total);
+            statement.setDouble(8, precio_gr_final);
+            statement.setDouble(9, monto_max_compra);
+            statement.setInt(10, id_materiales);
+            statement.setInt(11, id_usuario);
+            statement.setInt(12, id_variables);
+            statement.executeUpdate();
+            connection.close();
+            statement.close();
+            System.out.println("Compra insertada correctamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
 
     // Setters y Getters

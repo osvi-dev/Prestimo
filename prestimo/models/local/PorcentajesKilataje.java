@@ -1,5 +1,11 @@
 package prestimo.models.local;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import prestimo.models.database.DatabaseInit;
+import prestimo.models.database.VariablesDatabase;
+
 public class PorcentajesKilataje {
     private int id;
     private double porcentaje_min;
@@ -8,6 +14,8 @@ public class PorcentajesKilataje {
     private double porcentaje_aplicado;
     private int id_venta;
 
+    private DatabaseInit dbInit = new DatabaseInit(VariablesDatabase.getDATABASE(), VariablesDatabase.getUSER(), VariablesDatabase.getPASSWORD());
+    private Connection connection;
     public PorcentajesKilataje(int id, double porcentaje_min, double porcentaje_medio, double porcentaje_max,
         double porcentaje_aplicado, int id_venta) {
         this.id = id;
@@ -19,6 +27,32 @@ public class PorcentajesKilataje {
     }
 
     public PorcentajesKilataje() {}
+
+    private void setConnection(){
+        connection = dbInit.getConnection();
+    }
+    
+    /**
+     * Metodo para insertar los porcentajes de compra en la base de datos
+     */
+    public void insertarPorcentajesKilataje(){
+        String sql = "INSERT INTO porcentajes_compra (porcentaje_min, porcentaje_medio, porcentaje_max, porcentaje_aplicado, id_venta) VALUES (?,?,?,?,?)";
+        try {
+            setConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setDouble(1, porcentaje_min);
+            statement.setDouble(2, porcentaje_medio);
+            statement.setDouble(3, porcentaje_max);
+            statement.setDouble(4, porcentaje_aplicado);
+            statement.setInt(5, id_venta);
+            statement.executeUpdate();
+            connection.close();
+            statement.close();
+            System.out.println("Porcentaje de compra insertado correctamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     // Setters y Getters
     public int getId() {return id;}

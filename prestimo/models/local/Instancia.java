@@ -23,7 +23,10 @@ public class Instancia {
     private void setConnection(){
         connection = dbInit.getConnection();
     }
-
+    /**
+     * Metodo para insertar el token en la base de datos
+     * @param token
+     */
     public void insertarInstancia(String token){
         String sql = "INSERT INTO instancia (token) VALUES (?)";
         try {

@@ -1,9 +1,17 @@
 package prestimo.models.local;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import prestimo.models.database.DatabaseInit;
+import prestimo.models.database.VariablesDatabase;
+
 public class Variables {
     private int id;
     private double valor_seguridad;
     private double ganancia_gr;
+    private DatabaseInit dbInit = new DatabaseInit(VariablesDatabase.getDATABASE(), VariablesDatabase.getUSER(), VariablesDatabase.getPASSWORD());
+    private Connection connection;
     
     public Variables(int id, double valor_seguridad, double ganancia_gr) {
         this.id = id;
@@ -13,6 +21,29 @@ public class Variables {
 
     public Variables() {}
 
+    private void setConnection(){
+        connection = dbInit.getConnection();
+    }
+
+    /**
+     * Metodo para insertar las variables en la base de datos
+     * @param valor_seguridad
+     * @param ganancia_gr
+     */
+    public void insertarVariables(double valor_seguridad, double ganancia_gr){
+        String sql = "INSERT INTO variables (valor_seguridad, ganancia_gr) VALUES (?, ?)";
+        try {
+            setConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setDouble(1, valor_seguridad);
+            statement.setDouble(2, ganancia_gr);
+            statement.executeUpdate();
+            connection.close();
+            System.out.println("Variables insertadas correctamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     // Setters y Getters
     public void setId(int id) {this.id = id;}
     public int getId() {return id;}
