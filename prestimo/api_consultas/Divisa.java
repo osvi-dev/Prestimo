@@ -80,7 +80,7 @@ public class Divisa {
     private static double parsearDivisa(String jsonResponse) {
         try {
             // Buscamos el campo "compra" y su valor
-            int compraIndex = jsonResponse.indexOf("\"compra\":") + 10;
+            int compraIndex = jsonResponse.indexOf("\"fix\":") + 7;
             // Buscamos la siguiente coma o cierre de llave
             int endIndex = jsonResponse.indexOf(",", compraIndex);
             if (endIndex == -1) {

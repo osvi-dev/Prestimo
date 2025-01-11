@@ -47,7 +47,7 @@ public class FirstTimeViewBuilder implements  Builder<Region>{
         Pane results = new Pane(createMainCointainer());
        // results.setStyle("-fx-background-color: #3498db;"); 
     
-       results.getStylesheets().add("/login.css");
+       results.getStylesheets().add("prestimo/views/styles/login.css");
 
         return results;
     }
