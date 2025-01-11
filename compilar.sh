@@ -12,7 +12,7 @@ find . -name "*.java" | xargs javac  --module-path ~/JavaFX-21/javafx-sdk-21.0.5
 if [ $? -eq 0 ]; then
     echo -e "Compilación exitosa. \nEjecutando el programa..."
     # Ejecutar el programa
-java --module-path /home/osvaldo/JavaFX-21/javafx-sdk-21.0.5/lib:/home/osvaldo/Desktop/NNS/Prestimo-out:prestimo/libs \
+java --module-path ~/JavaFX-21/javafx-sdk-21.0.5/lib:../Prestimo-out:prestimo/libs \
      --class-path  .:prestimo/views/styles \
      --module prestimo/prestimo.Main
 else
