@@ -20,13 +20,13 @@ public class Oro {
     /**
      * Obtiene el precio actual del oro por onza desde la API.
      *
-     * @return el precio del oro en onzas como un valor double.
+     * @return el precio del oro en onzas como un valor double ya en pesos mexicanos.
      * @throws RuntimeException si ocurre un error durante la consulta o el procesamiento del JSON.
      */
     public static double obtenerPrecioOnza() {
         try {
             String jsonResponse = hacerPeticion(new URL(URL_ORO));
-            return parsearPrecioOnza(jsonResponse);
+            return parsearPrecioOnza(jsonResponse) * Divisa.obtenerPrecioDivisa();
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error al obtener el precio del oro");
