@@ -7,6 +7,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import prestimo.api_consultas.Oro;
 
 public class BuyModel {
 
@@ -37,6 +38,8 @@ public class BuyModel {
     public BuyModel(PercentagesCaratage percentagesCaratage, PercentagesPurchase percentagesPurchase){
         this.percentagesCaratage= percentagesCaratage;
         this.percentagesPurchase  =percentagesPurchase;
+        this.price_onz.set(Oro.obtenerPrecioOnza());
+        System.out.println("Precio oro/onz: "+Oro.obtenerPrecioOnza());
         caratageSelectors.bind(Bindings.createBooleanBinding(
             () -> !(caratage.get() && weight.get()), // Condición: ambos deben ser verdaderos
             caratage, weight // Observa cambios en estas propiedades
