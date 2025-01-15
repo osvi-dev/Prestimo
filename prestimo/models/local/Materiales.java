@@ -22,15 +22,17 @@ public class Materiales {
     private void setConnection(){
         connection = dbInit.getConnection();
     }
-
-    public void insertarMaterial(String nombre){
+    /**
+     *  Inserta un material a la base de datos
+     */
+    public void insertarMaterial(){
         String sql = "INSERT INTO materiales (nombre) VALUES (?)";
         try {
             setConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, nombre);
+            statement.setString(1, this.nombre);
             statement.executeUpdate();
-            connection.close();
+            dbInit.close();
             System.out.println("Material insertado correctamente");
         } catch (Exception e) {
             e.printStackTrace();

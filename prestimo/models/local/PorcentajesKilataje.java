@@ -40,13 +40,13 @@ public class PorcentajesKilataje {
         try {
             setConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setDouble(1, porcentaje_min);
-            statement.setDouble(2, porcentaje_medio);
-            statement.setDouble(3, porcentaje_max);
-            statement.setDouble(4, porcentaje_aplicado);
-            statement.setInt(5, id_venta);
+            statement.setDouble(1, this.porcentaje_min);
+            statement.setDouble(2, this.porcentaje_medio);
+            statement.setDouble(3, this.porcentaje_max);
+            statement.setDouble(4, this.porcentaje_aplicado);
+            statement.setInt(5, this.id_venta);
             statement.executeUpdate();
-            connection.close();
+            dbInit.close();
             statement.close();
             System.out.println("Porcentaje de compra insertado correctamente");
         } catch (Exception e) {

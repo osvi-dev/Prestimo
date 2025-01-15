@@ -21,17 +21,18 @@ public class Roles {
     }
     /**
      *  Inserta un rol en la base de datos 
-     * @param rol
+     * 
      */
-    public void insertarRol(String rol){
+    public void insertarRol(){
         String sql = "INSERT INTO roles (rol) VALUES (?)";
         try {
             setConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, rol);
+            statement.setString(1, this.rol);
             statement.executeUpdate();
             System.out.println("Rol insertado correctamente");
-            connection.close();
+            dbInit.close();
+            statement.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

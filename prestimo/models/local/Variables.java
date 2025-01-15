@@ -38,7 +38,8 @@ public class Variables {
             statement.setDouble(1, valor_seguridad);
             statement.setDouble(2, ganancia_gr);
             statement.executeUpdate();
-            connection.close();
+            dbInit.close();
+            statement.close();
             System.out.println("Variables insertadas correctamente");
         } catch (Exception e) {
             e.printStackTrace();
