@@ -60,17 +60,17 @@ public class LoginViewBuilder implements  Builder<Region>{
     // LeftSide ----------------------------------
     private Node createMainLeftContainer(){
         Pane container = new Pane(createLogo());
-        container.setMaxWidth(this.leftContainerWidth);
+        //container.setMaxWidth(this.leftContainerWidth);
         return container;
     }
 
     private Node createLogo(){
         Pane container = new Pane();
         Image image = new Image("prestimo/img/logo.png",
-        this.leftContainerWidth, this.leftContainerHeight, false, true);
+        100, 100, false, true);
    // container.setStyle("-fx-background-color:rgb(0, 0, 0);"); 
-        container.setMinWidth(this.leftContainerWidth);
-        container.setMinHeight(this.leftContainerHeight);
+        //container.setMinWidth(this.leftContainerWidth);
+        //container.setMinHeight(this.leftContainerHeight);
         // Crear un objeto BackgroundImage
         BackgroundImage backgroundImage = new BackgroundImage(
             image,
@@ -101,8 +101,8 @@ public class LoginViewBuilder implements  Builder<Region>{
         HBox container = new HBox(createFormContainer());
         //container.setStyle("-fx-background-color: #3498db;"); 
         container.setAlignment(Pos.CENTER);
-        container.setMinWidth(Screen.getPrimary().getBounds().getWidth()/1.5);
-        container.setMaxHeight(this.rigthContainerHeight);
+        //container.setMinWidth(Screen.getPrimary().getBounds().getWidth()/1.5);
+       // container.setMaxHeight(this.rigthContainerHeight);
         return container;
     }
 

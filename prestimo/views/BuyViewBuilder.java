@@ -5,6 +5,8 @@ import java.util.function.Consumer;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -12,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Builder;
@@ -27,16 +30,19 @@ public class BuyViewBuilder implements Builder<Region> {
 
      @Override
     public Region build() {
-        Pane results = new Pane(createMainCointainer());
-       // results.setStyle("-fx-background-color: #3498db;"); 
-    
-      // results.getStylesheets().add("/login.css");
-
+        VBox results = new VBox(createMainCointainer());
+        results.getStylesheets().add("/compra.css");
+        results.getStyleClass().add("build");
+        Responsive.bindingToParent(results, 1,1);
+       
         return results;
     }
 
     private Node createMainCointainer(){
         VBox container = new VBox(createTitle(), createKilatajeContainer());
+        container.getStyleClass().add("main");
+        Responsive.bindingToParent(container, 1,1);
+        container.setPadding(new Insets(20,50,20,50));
         return container;
     }
 
@@ -52,6 +58,7 @@ public class BuyViewBuilder implements Builder<Region> {
         createCaratagePriceSelectorsContainer(),
         createCaratagePurchaseSelectorsContainer(),
         createCalculoButton());
+        container.setSpacing(25);
         return container;
     }
 
@@ -64,8 +71,8 @@ public class BuyViewBuilder implements Builder<Region> {
     private Node createKilatajeOptions(){
         ComboBox<String> options = new ComboBox<>();
         options.getItems().addAll("8k","10k","12k","14k","16k","18k","20k","22k","24k");
-        // Agregar un listener para detectar cambios en la selección
-        
+        options.setMinWidth(100); // Ancho mínimo de 100 píxeles
+        options.setMaxWidth(200);
         options.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 model.caratage().set(true);
@@ -119,8 +126,9 @@ public class BuyViewBuilder implements Builder<Region> {
 
     private Node createPesoField(){
         TextField field = new TextField();
-        
-          
+            
+        field.setMinWidth(100); // Ancho mínimo de 100 píxeles
+        field.setMaxWidth(200);
         // Listener para actualizar el valor de pesoProperty() solo con entradas válidas
         field.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
@@ -138,13 +146,14 @@ public class BuyViewBuilder implements Builder<Region> {
 
     private Node createCaratagePriceSelectorsContainer(){
 
-        System.out.println(model.carageSelectors().get());
         HBox container = new HBox(
             createCaratagePriceMin(),
             createCaratagePriceInter(),
             createCaratagePriceMax()
             );
 
+            container.setMinWidth(100); // Ancho mínimo de 100 píxeles
+            container.setMaxWidth(200);
 
         return container;
 
@@ -193,7 +202,9 @@ public class BuyViewBuilder implements Builder<Region> {
             createPurchasePriceInter(),
             createPurchasePriceMax()
             );
-
+        
+            container.setMinWidth(100); // Ancho mínimo de 100 píxeles
+            container.setMaxWidth(200);
         return container;
 
     }
@@ -242,6 +253,9 @@ public class BuyViewBuilder implements Builder<Region> {
     
     private Node createCalculoButton(){
         Button button = new Button("Calcular");
+        
+        button.setMinWidth(100); // Ancho mínimo de 100 píxeles
+        button.setMaxWidth(200);
         button.disableProperty().bind(model.calculateButton());
         button.setOnAction(evt -> {
             calculate().accept(()->{
