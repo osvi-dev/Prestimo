@@ -27,6 +27,7 @@ public class Oro {
         try {
             String jsonResponse = hacerPeticion(new URL(URL_ORO));
             return parsearPrecioOnza(jsonResponse) * Divisa.obtenerPrecioDivisa();
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error al obtener el precio del oro");
