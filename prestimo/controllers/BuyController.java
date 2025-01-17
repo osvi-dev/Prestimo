@@ -14,6 +14,7 @@ import prestimo.models.BuyModel;
 import prestimo.models.PercentagesCaratage;
 import prestimo.models.PercentagesPurchase;
 import prestimo.models.VariablesModel;
+import prestimo.models.local.ComprasMetales;
 import prestimo.views.BuyViewBuilder;
 
 public class BuyController {
@@ -24,6 +25,7 @@ public class BuyController {
     private final PercentagesPurchase percentagesPurchaseModel;
     private final VariablesModel variablesModel;
     private final BuyInteractor interactor;
+    private double caratagePriceFinal;
     
 
     public BuyController(){
@@ -46,6 +48,7 @@ public class BuyController {
             @Override
             protected Void call() {
                 calculate();
+                saveBuy();
                 return null;
             }
         };
@@ -60,6 +63,16 @@ public class BuyController {
     }
 
     private void calculate(){
+        /*
+         * Pienso que sera mejor guardar los datos de la tabla variables en la base de datos
+         */
+        
+        /*
+         * TODO: Debemos extraer los datos de seguridad de la base de datos de la tabla variables
+         * para poder hacer los calculos, esto se hara una vez dado los valores
+         * los traeremos, creo que una opcion sera una vez iniciada la app, aplicar persistencia
+         * para los valores y no hacer una consulta diaria.
+         */
         model.priceGrInter().set(
             model.priceOnz().divide(model.conversionFactor().get()).get()
         ); // precio x gramos
@@ -73,7 +86,7 @@ public class BuyController {
        model.caratagePrice().set(
         model.priceGrLocal().divide(24).get()
        ); // precio kilataje
-        double caratagePriceFinal = model.caratagePrice().get() * model.kilatajeProperty().get() * model.percentagesCaratage().applied().get();
+        caratagePriceFinal = model.caratagePrice().get() * model.kilatajeProperty().get() * model.percentagesCaratage().applied().get();
       
         // Vincula el resultado al precio final
         model.caratagePriceFinal().set(caratagePriceFinal);// Precio a pagar por kilataje (min,inter,max)
@@ -94,5 +107,37 @@ public class BuyController {
 
 
        
+    }
+
+    /**
+     * Vamos a guardar la compra del metal
+     * para esto debemos llamar al modelo de la compra
+     * y crear un objeto de la compr, despues mandar llamar 
+     * su metodo de guardar
+     */
+    private void saveBuy(){
+        /*
+         * TODO: Una vez que se haya hecho el login debemos extraer el ID
+         * del usuario para guardar la compra, 
+         * ademas de hacer una lista para ver los metales disponibles
+         * y guardar kas variables.
+         * Ademas 
+         */
+        ComprasMetales compra = new ComprasMetales(
+            model.kilatajeProperty().get(), 
+            model.pesoProperty().get(),
+            model.priceOnz().get(),
+            model.priceGrInter().get(),
+            model.priceGrLocal().get(),
+            caratagePriceFinal,
+            model.caratagePriceFinal().get(),
+            model.priceGrFinal().get(),
+            model.maxPurchaseAmount().get(),
+            1,
+            1,
+            1);
+
+            // Una vez instanciado mi objeto, guardamos la compra
+            compra.insertarCompraMetales();
     }
 }

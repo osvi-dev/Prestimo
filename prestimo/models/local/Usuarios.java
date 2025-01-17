@@ -165,7 +165,7 @@ public class Usuarios {
             if (resultSet.next()) {
                 login = true;
             }
-            connection.close();
+            dbInit.close();
             statement.close();
         } catch (Exception e) {
             e.printStackTrace();

@@ -8,7 +8,6 @@ import prestimo.models.database.VariablesDatabase;
 
 public class ComprasMetales {
     /* TODO: tienes que hacer un metodo que lleve la cuenta de los ID, para mantener el contorl */
-    /* TODO: cambiar las variables por objectos */
     private int id;
     private int kilataje;
     private double peso;
@@ -35,6 +34,24 @@ public class ComprasMetales {
             double monto_max_compra, int id_materiales, int id_usuario, int id_variables) {
         
         this.id = id;
+        this.kilataje = kilataje;
+        this.peso = peso;
+        this.precio_oz_inter = precio_oz_inter;
+        this.precio_gr_inter = precio_gr_inter;
+        this.precio_gr_local = precio_gr_local;
+        this.precio_kilataje = precio_kilataje;
+        this.precio_kilataje_total = precio_kilataje_total;
+        this.precio_gr_final = precio_gr_final;
+        this.monto_max_compra = monto_max_compra;
+        this.id_materiales = id_materiales;
+        this.id_usuario = id_usuario;
+        this.id_variables = id_variables;
+    }
+
+    public ComprasMetales(int kilataje, double peso, double precio_oz_inter, double precio_gr_inter,
+            double precio_gr_local, double precio_kilataje, double precio_kilataje_total, double precio_gr_final,
+            double monto_max_compra, int id_materiales, int id_usuario, int id_variables) {
+        
         this.kilataje = kilataje;
         this.peso = peso;
         this.precio_oz_inter = precio_oz_inter;
