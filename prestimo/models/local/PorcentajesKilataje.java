@@ -16,6 +16,7 @@ public class PorcentajesKilataje {
 
     private DatabaseInit dbInit = new DatabaseInit(VariablesDatabase.getDATABASE(), VariablesDatabase.getUSER(), VariablesDatabase.getPASSWORD());
     private Connection connection;
+
     public PorcentajesKilataje(int id, double porcentaje_min, double porcentaje_medio, double porcentaje_max,
         double porcentaje_aplicado, int id_venta) {
         this.id = id;
@@ -36,7 +37,8 @@ public class PorcentajesKilataje {
      * Metodo para insertar los porcentajes de compra en la base de datos
      */
     public void insertarPorcentajesKilataje(){
-        String sql = "INSERT INTO porcentajes_compra (porcentaje_min, porcentaje_medio, porcentaje_max, porcentaje_aplicado, id_venta) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO porcentajes_compra (porcentaje_min, porcentaje_medio, porcentaje_max,"
+        + "porcentaje_aplicado, id_venta) VALUES (?,?,?,?,?)";
         try {
             setConnection();
             PreparedStatement statement = connection.prepareStatement(sql);

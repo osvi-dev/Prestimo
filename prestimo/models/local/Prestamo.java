@@ -1,5 +1,11 @@
 package prestimo.models.local;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import prestimo.models.database.DatabaseInit;
+import prestimo.models.database.VariablesDatabase;
+
 public class Prestamo {
     private int id;
     private double peso;
@@ -10,6 +16,9 @@ public class Prestamo {
     private double prestamo_final;
     private int id_material;
     
+    private DatabaseInit dbInit = new DatabaseInit(VariablesDatabase.getDATABASE(), VariablesDatabase.getUSER(), VariablesDatabase.getPASSWORD());
+    private Connection connection;
+
     public Prestamo() {}
     /**
      * Constructor de la clase Prestamo con id
@@ -55,6 +64,47 @@ public class Prestamo {
         this.id_material = id_material;
     }
 
+    private void setConnection(){
+        connection = dbInit.getConnection();
+    }
+
+    public void insertarPrestamo() {
+        String sql = "INSERT INTO prestamo (peso, kilataje, oro_fino_gr, precio_gr_local,"+
+                        "prestamo_max, prestamo_final, id_material) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try{
+            setConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setDouble(1, this.peso);
+            statement.setInt(2, this.kilataje);
+            statement.setDouble(3, this.oro_fino_gr);
+            statement.setDouble(4, this.precio_gr_local);
+            statement.setDouble(5, this.prestamo_max);
+            statement.setDouble(6, this.prestamo_final);
+            statement.setInt(7, this.id_material);
+            statement.executeUpdate();
+            dbInit.close();
+            statement.close();
+            System.out.println("Prestamo insertado correctamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // TODO: ver la logica para traerme los datos del prestamo en forma de objeto
+    // 
+    public void obtenerPrestamoPorId(String id) {
+        String sql = "SELECT peso, kilataje, prestamo_final, id_material FROM prestamo WHERE id = ?";
+        try {
+            setConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id);
+            statement.executeQuery();
+            dbInit.close();
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     // Setters y Getters
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}

@@ -1,5 +1,11 @@
 package prestimo.models.local;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import prestimo.models.database.DatabaseInit;
+import prestimo.models.database.VariablesDatabase;
+
 public class PorcentajesPrestamo {
 
     private int id;
@@ -8,6 +14,9 @@ public class PorcentajesPrestamo {
     private double porcentaje_max;
     private double porcentaje_aplicado;
     private int id_prestamo;
+
+    private DatabaseInit dbInit = new DatabaseInit(VariablesDatabase.getDATABASE(), VariablesDatabase.getUSER(), VariablesDatabase.getPASSWORD());
+    private Connection connection;
 
     public PorcentajesPrestamo() {}
     
@@ -46,6 +55,27 @@ public class PorcentajesPrestamo {
         this.porcentaje_max = porcentaje_max;
         this.porcentaje_aplicado = porcentaje_aplicado;
         this.id_prestamo = id_prestamo;
+    } 
+
+    private void setConnection(){
+        connection = dbInit.getConnection();
+    }
+
+    public void insertarPorcentajesPrestamo(){
+        setConnection();
+        try {
+            String sql = "INSERT INTO porcentajes_prestamo (porcentaje_min, porcentaje_medio, porcentaje_max, porcentaje_aplicado, id_prestamo) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setDouble(1, porcentaje_min);
+            statement.setDouble(2, porcentaje_medio);
+            statement.setDouble(3, porcentaje_max);
+            statement.setDouble(4, porcentaje_aplicado);
+            statement.setInt(5, id_prestamo);
+            statement.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     } 
 
     // Setters y Getters
