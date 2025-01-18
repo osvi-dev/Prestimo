@@ -51,30 +51,22 @@ public class Usuarios {
 
     /**
      * Inserta un nuevo usuario
-     * @param nombre
-     * @param apellido_paterno
-     * @param apellido_materno
-     * @param username
-     * @param correo 
-     * @param password
-     * @param id_rol
      */
-    public void insertarUsuario(String nombre, String apellido_paterno, String apellido_materno,
-                                String username, String correo, String password, int id_rol){
+    public void insertarUsuario(){
         String sql = "INSERT INTO usuarios (nombre, apellido_paterno, apellido_materno, username, correo, password, id_rol) VALUES (?, ?, ?, ?, ?, ?, ?)";
         password = Encriptar.encriptar(password);
         try{
             setConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, nombre);
-            statement.setString(2, apellido_paterno);
-            statement.setString(3, apellido_materno);
-            statement.setString(4, username);
-            statement.setString(5, correo);
-            statement.setString(6, password);
-            statement.setInt(7, id_rol);
+            statement.setString(1, this.nombre);
+            statement.setString(2, this.apellido_paterno);
+            statement.setString(3, this.apellido_materno);
+            statement.setString(4, this.username);
+            statement.setString(5, this.correo);
+            statement.setString(6, this.password);
+            statement.setInt(7, this.id_rol);
             statement.executeUpdate();
-            connection.close();
+            dbInit.close();
             statement.close();
             System.out.println("Usuario insertado correctamente");
         } catch (Exception e) {
@@ -93,7 +85,7 @@ public class Usuarios {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, username);
             statement.executeUpdate();
-            connection.close();
+            dbInit.close();
             statement.close();
             System.out.println("Usuario desabilitado correctamente");
         } catch (Exception e) {
@@ -112,7 +104,7 @@ public class Usuarios {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             statement.executeUpdate();
-            connection.close();
+            dbInit.close();
             statement.close();
             System.out.println("Usuario desabilitado correctamente");
         } catch (Exception e) {
@@ -129,7 +121,7 @@ public class Usuarios {
             setConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeQuery();
-            connection.close();
+            dbInit.close();
             statement.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -173,7 +165,7 @@ public class Usuarios {
             if (resultSet.next()) {
                 login = true;
             }
-            connection.close();
+            dbInit.close();
             statement.close();
         } catch (Exception e) {
             e.printStackTrace();

@@ -48,6 +48,24 @@ public class ComprasMetales {
         this.id_variables = id_variables;
     }
 
+    public ComprasMetales(int kilataje, double peso, double precio_oz_inter, double precio_gr_inter,
+            double precio_gr_local, double precio_kilataje, double precio_kilataje_total, double precio_gr_final,
+            double monto_max_compra, int id_materiales, int id_usuario, int id_variables) {
+        
+        this.kilataje = kilataje;
+        this.peso = peso;
+        this.precio_oz_inter = precio_oz_inter;
+        this.precio_gr_inter = precio_gr_inter;
+        this.precio_gr_local = precio_gr_local;
+        this.precio_kilataje = precio_kilataje;
+        this.precio_kilataje_total = precio_kilataje_total;
+        this.precio_gr_final = precio_gr_final;
+        this.monto_max_compra = monto_max_compra;
+        this.id_materiales = id_materiales;
+        this.id_usuario = id_usuario;
+        this.id_variables = id_variables;
+    }
+
     // Metodo para insertarlo en la base de datos
     private void setConnection(){
         connection = dbInit.getConnection();
@@ -55,48 +73,88 @@ public class ComprasMetales {
 
     /**
      * Metodo para insertar una compra de metales
-     * @param kilataje
-     * @param peso
-     * @param precio_oz_inter
-     * @param precio_gr_inter
-     * @param precio_gr_local
-     * @param precio_kilataje
-     * @param precio_kilataje_total
-     * @param precio_gr_final
-     * @param monto_max_compra
-     * @param id_materiales
-     * @param id_usuario
-     * @param id_variables
+     * 
      */
-    public void insertarCompraMetales(int kilataje, double peso, double precio_oz_inter, double precio_gr_inter,
-    double precio_gr_local, double precio_kilataje, double precio_kilataje_total, double precio_gr_final,
-    double monto_max_compra, int id_materiales, int id_usuario, int id_variables){
+    public void insertarCompraMetales(){
         String sql = "INSERT INTO compras_metales (kilataje, peso, precio_oz_inter, precio_gr_inter,precio_gr_local,"
         + "precio_kilataje, precio_kilataje_total, precio_gr_final, monto_max_compra, id_materiales, id_usuario, id_variables)"
         + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             setConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, kilataje);
-            statement.setDouble(2, peso);
-            statement.setDouble(3, precio_oz_inter);
-            statement.setDouble(4, precio_gr_inter);
-            statement.setDouble(5, precio_gr_local);
-            statement.setDouble(6, precio_kilataje);
-            statement.setDouble(7, precio_kilataje_total);
-            statement.setDouble(8, precio_gr_final);
-            statement.setDouble(9, monto_max_compra);
-            statement.setInt(10, id_materiales);
-            statement.setInt(11, id_usuario);
-            statement.setInt(12, id_variables);
+            statement.setInt(1, this.kilataje);
+            statement.setDouble(2, this.peso);
+            statement.setDouble(3, this.precio_oz_inter);
+            statement.setDouble(4, this.precio_gr_inter);
+            statement.setDouble(5, this.precio_gr_local);
+            statement.setDouble(6, this.precio_kilataje);
+            statement.setDouble(7, this.precio_kilataje_total);
+            statement.setDouble(8, this.precio_gr_final);
+            statement.setDouble(9, this.monto_max_compra);
+            statement.setInt(10, this.id_materiales);
+            statement.setInt(11, this.id_usuario);
+            statement.setInt(12, this.id_variables);
             statement.executeUpdate();
-            connection.close();
+            dbInit.close();
             statement.close();
             System.out.println("Compra insertada correctamente");
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Error al insertar compra");
         }
         
+    }
+
+    /**
+     * Metodo para editar la llave foranea del tipo del material que se compro
+     * @
+     * @param id
+     */
+    
+    public void editarCompraMetalesPorId(int id) {
+        
+        String sql = "UPDATE compras_metales SET kilataje = ?, peso = ?, precio_oz_inter = ?, "
+        + "precio_gr_inter = ?, precio_gr_local = ?, precio_kilataje = ?, precio_kilataje_total = ?, "
+        + "precio_gr_final = ?, monto_max_compra = ?, id_materiales = ? WHERE id = ?";
+        try {
+            setConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, this.kilataje);
+            statement.setDouble(2, this.peso);
+            statement.setDouble(3, this.precio_oz_inter);
+            statement.setDouble(4, this.precio_gr_inter);
+            statement.setDouble(5, this.precio_gr_local);
+            statement.setDouble(6, this.precio_kilataje);
+            statement.setDouble(7, this.precio_kilataje_total);
+            statement.setDouble(8, this.precio_gr_final);
+            statement.setDouble(9, this.monto_max_compra);
+            statement.setInt(10, this.id_materiales);
+            statement.setInt(11, id);
+            statement.executeUpdate();
+            dbInit.close();
+            statement.close();
+            System.out.println("Compra editada correctamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error al editar compra");
+        }
+    }
+
+    public void editarCompraMetalesPorId(int id, int id_materiales) {
+        
+        String sql = "UPDATE compras_metales SET id_materiales = ? WHERE id = ?";
+        try {
+            setConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id_materiales);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+            dbInit.close();
+            statement.close();
+            System.out.println("Compra editada correctamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Setters y Getters

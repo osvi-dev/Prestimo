@@ -30,15 +30,16 @@ public class Variables {
      * @param valor_seguridad
      * @param ganancia_gr
      */
-    public void insertarVariables(double valor_seguridad, double ganancia_gr){
+    public void insertarVariables(){
         String sql = "INSERT INTO variables (valor_seguridad, ganancia_gr) VALUES (?, ?)";
         try {
             setConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setDouble(1, valor_seguridad);
-            statement.setDouble(2, ganancia_gr);
+            statement.setDouble(1, this.valor_seguridad);
+            statement.setDouble(2, this.ganancia_gr);
             statement.executeUpdate();
-            connection.close();
+            dbInit.close();
+            statement.close();
             System.out.println("Variables insertadas correctamente");
         } catch (Exception e) {
             e.printStackTrace();
